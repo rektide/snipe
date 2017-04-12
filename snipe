@@ -1,0 +1,19 @@
+#!/bin/bash
+
+[[ ! -e "$1" ]] && echo provide target bid file && exit 1
+[[ $# -lt 2 ]] && echo provide sleep arguments && exit 1
+
+for i in $(seq 2 $#)
+do
+	echo sleep "${!i}"
+	sleep "${!i}"
+done
+echo starting
+
+for i in $(seq 30)
+do
+	esniper $1
+	[[ "$!" = "0" ]] && echo good! && exit 0
+	echo nope, esnipe failed
+	sleep 0.2
+done
